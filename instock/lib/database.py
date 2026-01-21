@@ -7,14 +7,15 @@ import pymysql
 from sqlalchemy import create_engine
 from sqlalchemy.types import NVARCHAR
 from sqlalchemy import inspect
+from urllib.parse import quote_plus
 
-__author__ = 'myh '
-__date__ = '2023/3/10 '
+__author__ = 'dhx '
+__date__ = '2026/01/21 '
 
-db_host = "localhost"  # 数据库服务主机
-db_user = "root"  # 数据库访问用户
-db_password = "root"  # 数据库访问密码
-db_database = "instockdb"  # 数据库名称
+db_host = "172.35.0.20"  # 数据库服务主机
+db_user = "usr_aikangdian"  # 数据库访问用户
+db_password = "Akd@1234"  # 数据库访问密码
+db_database = "emqx_user_db"  # 数据库名称
 db_port = 3306  # 数据库服务端口
 db_charset = "utf8mb4"  # 数据库字符集
 
@@ -35,8 +36,10 @@ _db_port = os.environ.get('db_port')
 if _db_port is not None:
     db_port = int(_db_port)
 
+
 MYSQL_CONN_URL = "mysql+pymysql://%s:%s@%s:%s/%s?charset=%s" % (
-    db_user, db_password, db_host, db_port, db_database, db_charset)
+    db_user, quote_plus(db_password), db_host, db_port, db_database, db_charset)
+
 logging.info(f"数据库链接信息：{ MYSQL_CONN_URL}")
 
 MYSQL_CONN_DBAPI = {'host': db_host, 'user': db_user, 'password': db_password, 'database': db_database,
